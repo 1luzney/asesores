@@ -1,0 +1,183 @@
+body {
+    background-color: #0000805b;
+    
+}
+
+/*index*/
+img{
+    max-width: 80%; 
+    height: auto;
+}
+
+.main_index {
+    display: flex;
+    justify-content: space-around;
+}
+
+.title_index {
+    text-align: center;
+    margin: 20px 0 0 0;
+    font-size: 60px;
+}
+
+.p_index{
+    text-align: center;
+    font-size: 25px;
+    margin-bottom: 60px;
+}
+
+.div_index {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+
+    a {
+        font-size: 30px;
+        text-decoration: none;
+        color: black;
+        visibility: visible;
+        position: relative;
+        margin: 30px 0 30px 0;
+    }
+
+    a::after {
+        content: "Entrar";
+        text-align: center;
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        visibility: hidden;
+        color: #f11818;
+    }
+
+    a:hover {
+        visibility: hidden;
+    }
+
+    a:hover::after {
+        visibility: visible;
+    }
+}
+
+/*header general*/
+
+header {
+    background-color: rgba(127, 255, 212, 0.281);
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    height: 70px;
+    font-size: 30px;
+    width: 100vw;
+    margin: 0;
+
+
+    a {
+        text-decoration: none;
+        color: black;
+    }
+}
+
+
+/* movil prepago*/
+
+main {
+    .title {
+        display: block;
+        width: 100%;
+        text-align: center;
+        margin-top: 20px;
+        font-size: 60px;
+    }
+
+    .paquetes {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 30px;
+        justify-content: center;
+        
+    }
+
+
+}
+
+.paquetes > section {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: stretch;
+        text-align: center;
+        gap: 10px;
+        flex-direction: column;
+        padding-top: 50px;
+    }
+
+
+/* La Tarjeta */
+.paquetes section>div>div {
+    flex: 1;
+    min-width: 280px;
+    max-width: 320px;
+    background-color: #0000803d;
+    border-radius: 15px;
+    padding: 0;
+    border: none;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    transition: transform 0.3s ease;
+    gap: 10px;
+    margin: 50px 0 50px 0;
+    height: 700px;
+}
+
+.paquetes section>div>div:hover {
+    transform: translateY(-10px);
+    background-color: #00008073;
+    border: 1px solid black;
+    
+}
+
+
+@media (max-width: 480px) {
+
+        header{
+            font-size: 20px;
+        }
+
+        a{
+                text-align: center;
+            }
+
+        .title_index{
+            font-size: 35px;
+        }
+
+        .title {
+            font-size: 18px;
+            color: #f11818;
+            padding: 0 10px;
+        }
+
+        .paquetes {
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .paquetes section>div>div {
+            height: 100%;
+            min-height: auto;
+            
+
+            p:last-child {
+                margin-top: auto;
+                padding-top: 20px;
+            }
+        }
+    }
+
+@media (max-width: 768px) {
+    /* Tablets */
+}
