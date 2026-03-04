@@ -1,5 +1,8 @@
 * {
     font-family: sans-serif;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
 body {
@@ -9,16 +12,26 @@ body {
 
 /*index*/
 img {
-    max-width: 80%;
+    max-width: 100%;
     height: auto;
+    display: block;
 }
 
 .main_index {
     display: flex;
+    width: 100%;
+    align-items: stretch;
+    gap: 8px;
+    box-sizing: border-box;
+    padding: 10px;
+    flex-wrap: wrap;
+    overflow-x: auto;
+    flex-direction: row;
     justify-content: space-around;
 }
 
 .title_index {
+    width: 100vh;
     text-align: center;
     margin: 20px 0 0 0;
     font-size: 60px;
@@ -32,10 +45,15 @@ img {
 
 .div_index {
     display: flex;
+    flex: 1;
+    min-width: 0;
+    width: 100%;
     flex-direction: column;
+    justify-content: space-between;
     align-items: center;
     text-align: center;
-    padding: 20px;
+    margin-bottom: 15px;
+    padding: 10px;
     text-decoration: none;
 
 
@@ -51,14 +69,13 @@ img {
             padding: 25px;
             border-radius: 10px;
             background: rgba(59, 59, 59, 0.151);
-           
+            display: flex;
+           align-items: center;
+           justify-content: center;
         }
     }
 
-    a h3 {
-        
-        position: relative;
-    }
+   
 
     a:hover h3{
         font-size: 0;
@@ -70,12 +87,24 @@ img {
         font-size: 25px;
     }
 }
+.div_index p{
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.div_index img{
+    max-width: 100%;
+    height: 60%;
+    object-fit: contain;
+    word-wrap: break-word;
+    margin: 0 auto;
+}
 
 /*header general*/
 
 header {
     padding: 15px;
-    background-color: rgba(43, 43, 43, 0.281);
+    
     display: flex;
     justify-content: space-around;
     align-items: center;
@@ -96,6 +125,7 @@ header {
 /* movil prepago*/
 
 main {
+    width: 10;
     .title {
         display: block;
         width: 100%;
@@ -164,11 +194,10 @@ main {
         font-size: 20px;
     }
 
-    a {
-        text-align: center;
-    }
+   
 
     .title_index {
+        width: 100%;
         font-size: 35px;
     }
 
@@ -193,4 +222,34 @@ main {
             padding-top: 20px;
         }
     }
+
+    .div_index img{
+    
+    height: 100px;
+    object-fit: contain;
+    word-wrap: break-word;
+    margin-bottom: 10px;
+    display: block;
+    
+}
+
+.div_index{
+    a {
+        text-decoration: none;
+        position: relative;
+        display: inline-block;
+
+        h3 {
+            font-size: 15px;
+            color: rgb(0, 0, 0);
+            height: 20px;
+            padding: 25px;
+            border-radius: 10px;
+            background: rgba(59, 59, 59, 0.151);
+            display: flex;
+           align-items: center;
+           justify-content: center;
+        }
+    }
+}
 }
