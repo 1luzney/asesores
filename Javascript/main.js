@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", () => {
 // const urlBase = "https://file-examples-com.github.io/uploads/2017/02/file_example_XLSX_10.xlsx";
 const urlBase = "../javascript/pruebaExcel.xlsx";
   const rutasMap = {
-    "movilPostpago": "Postpago",
+    "movilPostpago": "movilpospago.html".includes("postpago"),
     "prepago" : "Prepago",
     "hogar"   : "Hogar"
   };
