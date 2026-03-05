@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", () => {
 // const urlBase = "https://file-examples-com.github.io/uploads/2017/02/file_example_XLSX_10.xlsx";
 const urlBase = "../javascript/pruebaExcel.xlsx";
   const rutasMap = {
-    "movilPostpago": "movilPospago.html".includes("postpago"),
+    "postpago": "Postpago",
     "prepago" : "Prepago",
     "hogar"   : "Hogar"
   };
@@ -48,6 +48,7 @@ const urlBase = "../javascript/pruebaExcel.xlsx";
 
         // 5. Mostrar los datos (tu lógica de siempre)
         contenedor.innerHTML = "";
+        
         data.forEach(plan => {
             const card = document.createElement("div");
             card.classList.add("plan-card");
@@ -59,7 +60,7 @@ const urlBase = "../javascript/pruebaExcel.xlsx";
             `;
             contenedor.appendChild(card);
         });
-
+        
     } catch (error) {
         console.error("Error con el Excel:", error);
         contenedor.innerHTML = `<p>Error al leer el Excel: ${error.message}</p>`;
