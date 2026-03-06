@@ -1,78 +1,82 @@
 console.log("JS funcionando");
 document.addEventListener("DOMContentLoaded", () => {
   // 1. CONFIGURACIÓN DE URL Y RUTAS
-
   const ruta = window.location.pathname.toLowerCase();
-
-  // REEMPLAZA ESTA URL con tu link directo de OneDrive (Paso del resid y authkey)
-  //const urlBase = "https://onedrive.live.com/download.aspx?resid=TU_RESID&authkey=TU_AUTHKEY";
-  // const urlBase = "https://file-examples-com.github.io/uploads/2017/02/file_example_XLSX_10.xlsx";
-  const urlBase = "../javascript/pruebaExcel.xlsx";
+  const urlBase = "../assets/Benchmarking.xlsx"; // Excel completo en /public
   const rutasMap = {
-    "postpago": "Postpago",
-    "prepago": "Prepago",
-    "hogar": "Hogar"
+    "postpago": "PREPAGO - CANAL TAT",
+    "prepago": "MOVIL - CANAL PDV",
+    "hogar": "HOGAR - CANAL CALLE"
   };
 
   // 2. IDENTIFICAR QUÉ PÁGINA MOSTRAR
   const claveEncontrada = Object.keys(rutasMap).find(key => ruta.includes(key));
-  const hoja = claveEncontrada ? rutasMap[claveEncontrada] : "Postpago";
+  const hoja = claveEncontrada ? rutasMap[claveEncontrada] : "PREPAGO-CANAL TAT";
 
-  // Construimos la URL final con el parámetro de la hoja
-  const url = urlBase;
   const contenedor = document.getElementById("contenedor-planes");
 
   // 3. FUNCIÓN PRINCIPAL PARA CARGAR DATOS
   const cargarDatos = async () => {
     try {
-      // 1. Descargar el archivo de OneDrive como "arrayBuffer" (datos binarios)
-      const res = await fetch(url);
+      const res = await fetch(urlBase);
+
+console.log("Fetch status:", res.status);
+  console.log("Fetch ok:", res.ok);
+  const contentType = res.headers.get("content-type");
+  console.log("Content-Type:", contentType);
+
+
       if (!res.ok) throw new Error("No se pudo descargar el Excel");
 
       const buffer = await res.arrayBuffer();
-
-      // 2. Usar la librería XLSX para leer el archivo
       const libro = XLSX.read(buffer, { type: 'array' });
-
-      // 3. Obtener la hoja específica (Postpago, Prepago o Hogar)
-      // 'hoja' es la variable que ya definiste arriba en tu código
       const contenidoHoja = libro.Sheets[hoja];
+      if (!contenidoHoja) throw new Error(`La hoja '${hoja}' no existe en el Excel"`);
 
-      if (!contenidoHoja) {
-        throw new Error(`La hoja '${hoja}' no existe en el Excel"`);
-      }
+      // Convertimos a JSON y normalizamos nombres de columnas
+      const data = XLSX.utils.sheet_to_json(contenidoHoja).map(fila => ({
+        operador: fila.Operador || fila.operador || "",
+        titulo: fila.Titulo || fila.titulo || "",
+        descripcion: fila.Descripcion || fila.descripcion || "",
+        dias: fila.Dias || fila.dias || "",
+        precio: fila.Precio || fila.precio || ""
+      }));
 
-      // 4. Convertir la hoja de Excel a formato JSON
-      const data = XLSX.utils.sheet_to_json(contenidoHoja);
-      console.log(data)
-
-      // 5. Mostrar los datos (tu lógica de siempre)
       contenedor.innerHTML = "";
 
+      // 4. Generar tarjetas
       data.forEach(plan => {
         const card = document.createElement("div");
         card.classList.add("paquetes");
 
-        
-        const nombreOperador = plan.operador ? plan.operador.toLowerCase().trim() : "";
-        let estiloColor = "";
-        
-        if (nombreOperador === "rojo") estiloColor = "background-color: #ff0000; color: white;";
-        else if (nombreOperador === "verde") estiloColor = "background-color: #008000; color: white;";
-        else if (nombreOperador === "azul") estiloColor = "background-color: #0000ff; color: white;";
-          
+        // Color según operador
+        const nombreOperador = plan.operador.toLowerCase().trim();
+        let estiloOperador = "";
+        if (nombreOperador === "rojo") estiloOperador = "background-color: #ff0000; color: white;";
+        else if (nombreOperador === "verde") estiloOperador = "background-color: #008000; color: white;";
+        else if (nombreOperador === "azul") estiloOperador = "background-color: #0000ff; color: white;";
 
+        // Color según título
+        const tituloPrincipal = plan.titulo.toLowerCase();
+        let estiloTitulo = "";
+        if (tituloPrincipal.includes("premium")) estiloTitulo = "color: gold;";
+        else if (tituloPrincipal.includes("básico")) estiloTitulo = "color: silver;";
+        else if (tituloPrincipal.includes("pro")) estiloTitulo = "color: #00bfff;";
+
+        // HTML de la tarjeta
         card.innerHTML = `
-              <section">
-              <h2  style="${estiloColor}>${plan.operador}</h2>
-                <h2 class="titulo-paquetes">${plan.titulo}</h2>
-                <div>
-                  <p>${plan.descripcion}</p>
-                  <p>${plan.dias} días</p>
-                  <strong>$${plan.precio}</strong>
-                </div>
-              </section>
-            `;
+          <section>
+            <h2 style="${estiloOperador}">${plan.operador}</h2>
+            <h2 class="titulo-paquetes" style="${estiloTitulo}">${plan.titulo}</h2>
+            <div>
+            <p>${plan.paquete}</p>
+              <p>${plan.descripcion}</p>
+              <p>${plan.dias} días</p>
+              <strong>$${plan.precio}</strong>
+            </div>
+          </section>
+        `;
+
         contenedor.appendChild(card);
       });
 
@@ -85,5 +89,3 @@ document.addEventListener("DOMContentLoaded", () => {
   // Ejecutamos la función
   cargarDatos();
 });
-
-
