@@ -2,7 +2,7 @@ console.log("JS funcionando");
 document.addEventListener("DOMContentLoaded", () => {
   // 1. CONFIGURACIÓN DE URL Y RUTAS
   const ruta = window.location.pathname.toLowerCase();
-  const urlBase = "../assets/Benchmarking.xlsx"; // Excel completo en /public
+  const urlBase = "/assets/Benchmarking.xlsx"; // Excel completo en /public
   const rutasMap = {
     "postpago": "PREPAGO - CANAL TAT",
     "prepago": "MOVIL - CANAL PDV",
