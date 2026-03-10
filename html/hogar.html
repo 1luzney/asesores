@@ -1,25 +1,63 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Asesoria Hogar</title>
     <link rel="stylesheet" href="../css/style.css">
 </head>
+
 <body>
-    <header>
+    <header id="menu">
         <a href="../index.html"> ⇦ Regresar</a>
         <a href="./postpago.html">Movil Postpago</a>
         <a href="./prepago.html">Movil Prepago</a>
-        
+        <a href="./hogar.html">Hogar</a>
     </header>
     <main>
+        <h1 class="title">Benchmarking R2</h1>
+        <div class="paquetes">
+            
+            <section id="contenedor-planes" class="main-section">
+
+                
+            </section>
+        </div>
+
+    </main>
+    <!-- <section>
+        <div id="contenedor-planes">
+            <div id="TituloPagina">
+                <h2>titulo</h2>
+                <p>decos</p>
+                <p>red</p>
+                <p>$<strong>precio</strong></p>
+            </div>
+        </div>
+    </section> -->
+
+
+    <!-- <main>
         <div id="contenedor-planes">
 
         </div>
-    </main>
+    </main> -->
     <!-- <script src="https://cdn.sheetjs.com/xlsx-latest/package/dist/xlsx.full.min.js"></script> -->
     <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
-    <script src="../javascript/main.js"></script>
+
+    <script type="module" src="../javascript/hogar.js"></script>
+    <!-- <script>cargarDatos("Oferta Hogar");</script> -->
+     <script>
+        const links = document.querySelectorAll('#menu a');
+const paginaActual = window.location.pathname.split("/").pop(); // Obtiene el nombre del archivo
+
+links.forEach(link => {
+  if (link.getAttribute('href') === paginaActual) {
+    link.classList.add('active'); // Clase para estilos
+  }
+});
+    </script>
 </body>
+
 </html>
