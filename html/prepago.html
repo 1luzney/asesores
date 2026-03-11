@@ -12,10 +12,10 @@
 
 <body>
     <header id="menu">
-        <a href="../index.html">⇦ Regresar</a>
-        <a href="./postpago.html">Movil Postpago</a>
-        <a href="./prepago.html">Movil Prepago</a>
-        <a href="./hogar.html">Hogar</a>
+        <a href="../index.html"> ⇦ Regresar</a>
+<a href="/html/postpago.html">Movil Postpago</a>
+<a href="/html/prepago.html">Movil Prepago</a>
+<a href="/html/hogar.html">Hogar</a>
     </header>
     
     <main>
@@ -32,18 +32,7 @@
 
     <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
     
-    <script type="module" src="../javascript/prepago.js"></script>
-    <!-- <script>cargarDatos("Paquetes Prepago");</script> -->
-     <script>
-        const links = document.querySelectorAll('#menu a');
-const paginaActual = window.location.pathname.split("/").pop(); // Obtiene el nombre del archivo
-
-links.forEach(link => {
-  if (link.getAttribute('href') === paginaActual) {
-    link.classList.add('active'); // Clase para estilos
-  }
-});
-    </script>
+    <script type="module" src="../javascript/main.js"></script>
 </body>
 
 </html>

@@ -11,13 +11,3 @@ export async function getDatos(nombreHoja) {
     console.log("Datos limpios:", json[0]); // Esto te mostrará los nombres correctos
     return json;
 }
-
-
-
-
-
-//  <p><strong style="color:red; font-size: 1.5em; font-weight: bold;">$ ${item[' Precio '] || 'Consultar'}</strong></p>
-//                     <p><strong></strong> ${item['Velocidad del @'] || 'N/A'}</p>
-//                     <p><strong style="color:red;>TV: </strong> ${item['Tipo de TV'] || 'General'}</p>
-//                     <p><strong style="color:red;>Decos: </strong> ${item['Cantidad de Decos incluidos'] || 'N/A'}</p>
-//                     <p><strong style="color:red;>OTTs Incuidas: </strong> ${item['"OTT Incluidas (Nombres de las OTT)"'] || 'N/A'}</p>

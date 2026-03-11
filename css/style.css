@@ -71,29 +71,30 @@ img {
             border-radius: 10px;
             background: rgba(59, 59, 59, 0.151);
             display: flex;
-           align-items: center;
-           justify-content: center;
+            align-items: center;
+            justify-content: center;
         }
     }
 
-   
 
-    a:hover h3{
+
+    a:hover h3 {
         font-size: 0;
     }
 
-    a:hover h3::after{
+    a:hover h3::after {
         content: "Entrar";
-        color: #f11818;
+        color: #232336;
         font-size: 25px;
     }
 }
-.div_index p{
+
+.div_index p {
     overflow: hidden;
     text-overflow: ellipsis;
 }
 
-.div_index img{
+.div_index img {
     max-width: 100%;
     height: 60%;
     object-fit: contain;
@@ -127,6 +128,7 @@ header {
 
 main {
     width: 10;
+
     .title {
         display: block;
         width: 100%;
@@ -141,12 +143,7 @@ main {
         gap: 30px;
         justify-content: center;
     }
-
-
 }
-
-
-
 
 /* La Tarjeta */
 .content {
@@ -162,7 +159,10 @@ main {
     overflow: hidden;
     transition: transform 0.3s ease;
     gap: 20px;
-
+    flex: 1;
+    flex-grow: 1;
+    /* Hace que el contenido se distribuya y estire */
+    justify-content: space-between;
 }
 
 .content:hover {
@@ -176,80 +176,51 @@ main {
     margin-top: 0px;
     padding: 15px;
     background-color: rgba(0, 0, 0, 0.788);
-    
-}
+    min-height: 60px;
 
-.active {
-  font-weight: bold;
-  color: red; /* Cambia según tu diseño */
-  border-bottom: 2px solid red;
 }
 
 
-@media (max-width: 480px) {
-
-    header {
-        font-size: 20px;
-    }
-
-   
-
-    .title_index {
-        width: 100%;
-        font-size: 35px;
-    }
-
-    .title {
-        font-size: 18px;
-        color: #f11818;
-        padding: 0 10px;
-    }
-
-    .paquetes {
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .paquetes section>div>div {
-        height: 100%;
-        min-height: auto;
-
-
-        p:last-child {
-            margin-top: auto;
-            padding-top: 20px;
-        }
-    }
-
-    .div_index img{
-    
-    height: 100px;
-    object-fit: contain;
+.content p,
+.content h2,
+.content h3 {
     word-wrap: break-word;
-    margin-bottom: 10px;
-    display: block;
-    
+    overflow-wrap: break-word;
 }
 
-.div_index{
-    a {
-        text-decoration: none;
-        position: relative;
-        display: inline-block;
 
-        h3 {
-            font-size: 15px;
-            color: rgb(0, 0, 0);
-            height: 20px;
-            padding: 25px;
-            border-radius: 10px;
-            background: rgba(59, 59, 59, 0.151);
-            display: flex;
-           align-items: center;
-           justify-content: center;
-        }
-    }
+/* Estilos base del menú */
+
+#menu {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    background: #41434b73;
+    padding: 12px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
 }
+
+/* Evita que el contenido se esconda debajo del menú */
+main {
+    margin-top: 70px;
+    /* Ajusta según la altura real del menú */
+}
+
+
+#menu a {
+    color: #0e1520;
+    text-decoration: none;
+    padding: 6px 10px;
+    border-radius: 8px;
+    transition: background .2s, color .2s;
+}
+
+#menu a.active,
+#menu a[aria-current="page"] {
+    color: #0f172a;
+    background: #bec1c4;
+    font-weight: 600;
+    box-shadow: inset 0 -2px 0 #120ee9;
 }
 
 .main-section {
@@ -285,11 +256,36 @@ main {
     padding-top: 10px;
 }
 
+.cards-container {
+    display: grid;
+    gap: 20px;
+    /* TODAS EXACTAMENTE IGUALES */
+    justify-content: center;
+    /* TODAS LAS TARJETAS DEL MISMO ALTO AUTOMÁTICO */
+    grid-auto-rows: 1fr;
+    /*  3 columnas iguales */
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    align-items: stretch;
+}
+
+
 .card-wrapper {
-    border-radius: 15px;
+    border-radius: 12px;
     overflow: hidden;
-    box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
     margin: 10px 0 10px 0;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 600px;
+    /* 3) Forzar misma altura */
+    min-height: 350px;
+    /* 4) Ajusta al tamaño ideal */
+    box-sizing: border-box;
+    width: 280px;
+    /* 🔥 Fuerza mismo ancho siempre */
+    max-width: 280px;
 }
 
 .card-wrapper .tittle-paquetes {
@@ -303,13 +299,89 @@ main {
 }
 
 @media (max-width: 480px) {
+
+    header {
+        font-size: 20px;
+    }
+
+
+
+    .title_index {
+        width: 100%;
+        font-size: 35px;
+    }
+
+    .title {
+        font-size: 18px;
+        color: #f11818;
+        padding: 0 10px;
+    }
+
+    .paquetes {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .paquetes section>div>div {
+        height: 100%;
+        min-height: auto;
+
+
+        p:last-child {
+            margin-top: auto;
+            padding-top: 20px;
+        }
+    }
+
+    .div_index img {
+
+        height: 100px;
+        object-fit: contain;
+        word-wrap: break-word;
+        margin-bottom: 10px;
+        display: block;
+
+    }
+
+    .div_index {
+        a {
+            text-decoration: none;
+            position: relative;
+            display: inline-block;
+
+            h3 {
+                font-size: 15px;
+                color: rgb(0, 0, 0);
+                height: 20px;
+                padding: 25px;
+                border-radius: 10px;
+                background: rgba(59, 59, 59, 0.151);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+        }
+    }
+
     .main-section {
         flex-direction: column !important;
         flex-wrap: wrap;
     }
-
+    
     .columna-operador {
         min-width: 100%;
         max-width: 100%;
     }
+
+    .content{
+        height: auto;
+        min-height: auto;
+    }
+
+     .card-wrapper {
+        height: auto;
+        min-height: auto;
+    }
 }
+
+
