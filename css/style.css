@@ -207,13 +207,13 @@ main {
 }
 
 
-#menu a {
+/* #menu a {
     color: #0e1520;
     text-decoration: none;
     padding: 6px 10px;
     border-radius: 8px;
     transition: background .2s, color .2s;
-}
+} */
 
 #menu a.active,
 #menu a[aria-current="page"] {
