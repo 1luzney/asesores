@@ -32,11 +32,11 @@
     if (path.endsWith("/index.html") || path === "/") {
       // Si más adelante tienes lógica para la home:
       // await import("./index.js");
-    } else if (path.endsWith("/html/hogar.html")) {
+    } else if (path.endsWith("../html/hogar.html")) {
       await import("./hogar.js");      // /javascript/hogar.js
-    } else if (path.endsWith("/html/prepago.html")) {
+    } else if (path.endsWith("../html/prepago.html")) {
       await import("./prepago.js");    // /javascript/prepago.js
-    } else if (path.endsWith("/html/postpago.html")) {
+    } else if (path.endsWith("../html/postpago.html")) {
       await import("./postpago.js");   // /javascript/postpago.js
     }
   } catch (e) {
