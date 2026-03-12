@@ -8,7 +8,7 @@
   const currentPath = norm(window.location.pathname.split("/").pop());
 
   menu.querySelectorAll("a").forEach((link) => {
-    const linkPath = norm(link.getAttribute("href").split("/").pop());
+    const linkPath = norm((link.getAttribute("href") || "").split("/").pop());
 
     const isExact = currentPath === linkPath;
 
