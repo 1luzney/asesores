@@ -3,7 +3,7 @@
 import { getDatos } from './excel.js';
 
 async function cargarContenido() {
-    
+
     const datos = await getDatos('HOGAR - CANAL CALLE');
     console.log("Datos recibidos:", datos);
 
@@ -26,11 +26,14 @@ async function cargarContenido() {
     // Colores por operador
     const coloresOperadores = {
         "Claro": "#e63946",
-        "Movistar": "#2dc653",
+        "Movistar": "#0da533",
         "Tigo": "#1d70b8",
         "WOM": "#7b2fff",
         "Virgin Mobile": "#ff6b00",
-        "Somos": "#000000"
+        "Somos": "#000000",
+        "Legon": "#ffb703",
+        "Tu Cable": "#5f3505",
+        "Plus": "#0c5a5a"
     };
 
     // Títulos dinámicos por operador
@@ -40,8 +43,15 @@ async function cargarContenido() {
         "Tigo": "Planes Movil T",
         "WOM": "Planes Movil W",
         "Virgin Mobile": "Planes Movil V",
-        "Somos": "Planes Movil S"
+        "Somos": "Planes Movil S",
+        "Legon": "Planes L",
+        "Tu Cable": "Planes TC",
+        "Plus": "Planes P"
     };
+
+
+
+
 
     // Agrupar por operador
     const porOperador = {};
@@ -57,6 +67,10 @@ async function cargarContenido() {
             const color = coloresOperadores[operador] || '#333';
             const tituloDinamico = titulosProOperador[operador] || `Planes ${operador}`;
 
+            function formatearPrecio(valor) {
+                return new Intl.NumberFormat('es-CO').format(Number(valor));
+            }
+
             const cards = items.map(item => `
                 <div class="card-wrapper">
                     <div class="tittle-paquetes" style="border-top: 4px solid ${color};">
@@ -66,9 +80,11 @@ async function cargarContenido() {
                     </div>
                     <div class="content">
                         <h3>Precio Mes</h3>
-                        <p><strong style="color:red; font-size: 1.5em; font-weight: bold;">
-                            $ ${item[' Precio '] || 'Consultar'}
-                        </strong></p>
+                        <p>
+                            <strong style="color:red; font-size: 1.5em; font-weight: bold;">
+                            $ ${item[' Precio '] ? formatearPrecio(item[' Precio ']) : 'Consultar'}
+                            </strong>
+                        </p>
 
                         <p>${item['Velocidad del @'] || 'N/A'}</p>
 

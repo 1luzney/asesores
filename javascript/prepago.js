@@ -57,6 +57,10 @@ async function cargarContenido() {
             const color = coloresOperadores[operador] || '#5f5c5c';
             const tituloDinamico = titulosProOperador[operador] || `Planes ${operador}`;
 
+            function formatearPrecio(valor) {
+                return new Intl.NumberFormat('es-CO').format(Number(valor));
+            }
+
             const cards = items.map(item => `
                 <div class="card-wrapper">
                     <div class="tittle-paquetes" style="border-top: 4px solid ${color};">
@@ -76,9 +80,9 @@ async function cargarContenido() {
                         <p><strong>Paquete:</strong> ${item.Paquete || 'General'}</p>
 
                         <p>
-                          <strong style="color:red; font-size: 1.5em; font-weight: bold;">
-                          $ ${item['Precio de la Recarga'] || 'Consultar'}
-                          </strong>
+                            <strong style="color:red; font-size: 1.5em; font-weight: bold;">
+                            $ ${item['Precio de la Recarga'] ? formatearPrecio(item['Precio de la Recarga']) : 'Consultar'}
+                            </strong>
                         </p>
 
                         <p><small>Vigencia: ${item['Días de Vigencia'] || 'Dias'} días</small></p>

@@ -83,6 +83,10 @@ async function cargarContenido() {
       const color = coloresOperadores[operador] || '#333';
       const tituloDinamico = titulosProOperador[operador] || `Planes ${operador}`;
 
+      function formatearPrecio(valor) {
+        return new Intl.NumberFormat('es-CO').format(Number(valor));
+      }
+
       const cards = items.map((item) => {
         // Campos con posibles variaciones de nombre desde Excel
         const cantidadGB = getField(item, ['Cantidad de GB']);
@@ -110,9 +114,11 @@ async function cargarContenido() {
               <p><strong>Apps después del plan:</strong> ${appsDespues}</p>
               <p><strong>Campaña:</strong> ${campania}</p>
               <p><strong>Minutos Países:</strong> ${minutosLDI}</p>
-              <p><strong style="color:red; font-size: 1.5em; font-weight: bold;">
-                $ ${tarifaTotal}
-              </strong></p>
+              <p>
+                <strong style="color:red; font-size: 1.5em; font-weight: bold;">
+                $ ${tarifaTotal ? formatearPrecio(tarifaTotal) : 'Consultar'}
+                </strong>
+              </p>
             </div>
           </div>
         `;
