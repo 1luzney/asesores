@@ -1,21 +1,29 @@
 
 // Marcar el enlace activo en el header 
 (function () {
+  const menu = document.getElementById("menu");
+  if (!menu) return;
 
-  const links = document.querySelectorAll("#menu a");
-  const current = window.location.pathname.split("/").pop();
+  const norm = (p) => p.replace(/\/+$/, "").toLowerCase();
+  const currentPath = norm(window.location.pathname.split("/").pop());
 
-  links.forEach(link => {
+  menu.querySelectorAll("a").forEach((link) => {
+    const linkPath = norm(link.getAttribute("href").split("/").pop());
 
-    const href = link.getAttribute("href").split("/").pop();
+    const isExact = currentPath === linkPath;
 
-    if (href === current) {
-      link.classList.add("active");
-      link.setAttribute("aria-current", "page");
-    }
+    const isIndexEquivalent =
+      (currentPath.endsWith("/") && (linkPath.endsWith("/index.html") || linkPath === "/")) ||
+      (currentPath.endsWith("/index.html") &&
+        (linkPath === currentPath || linkPath === currentPath.replace(/index.html$/, "")));
 
+    const active = isExact || isIndexEquivalent;
+
+    link.classList.toggle("active", active);
+
+    if (active) link.setAttribute("aria-current", "page");
+    else link.removeAttribute("aria-current");
   });
-
 })();
 
 // --- 2) Import dinámico: cargar solo el JS de la página actual ---
