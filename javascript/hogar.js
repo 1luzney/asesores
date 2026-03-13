@@ -15,15 +15,12 @@ async function cargarContenido() {
         return;
     }
 
-    // Filtrar operadores válidos
     const datosFiltrados = datos.filter(item =>
         item.Operador && item.Operador !== 'Sin Operador'
     );
 
-    // Orden alfabético
     datosFiltrados.sort((a, b) => a.Operador.localeCompare(b.Operador));
 
-    // Colores por operador
     const coloresOperadores = {
         "Claro": "#e63946",
         "Movistar": "#0da533",
@@ -36,75 +33,156 @@ async function cargarContenido() {
         "Plus": "#0c5a5a"
     };
 
-    // Títulos dinámicos por operador
     const titulosProOperador = {
-        "Claro": "Planes Movil C",
-        "Movistar": "Planes Movil M",
-        "Tigo": "Planes Movil T",
-        "WOM": "Planes Movil W",
-        "Virgin Mobile": "Planes Movil V",
-        "Somos": "Planes Movil S",
-        "Legon": "Planes L",
-        "Tu Cable": "Planes TC",
-        "Plus": "Planes P"
+        "Claro": "Oferta Hogar C",
+        "Movistar": "Oferta Hogar M",
+        "Tigo": "Oferta Hogar T",
+        "WOM": "Oferta Hogar W",
+        "Virgin Mobile": "Oferta Hogar V",
+        "Somos": "Oferta Hogar S",
+        "Legon": "Oferta Hogar L",
+        "Tu Cable": "Oferta Hogar TC",
+        "Plus": "Oferta Hogar P"
     };
 
-
-
-
-
-    // Agrupar por operador
     const porOperador = {};
     datosFiltrados.forEach(item => {
         if (!porOperador[item.Operador]) porOperador[item.Operador] = [];
         porOperador[item.Operador].push(item);
     });
 
-    // Renderizar HTML final
-    contenedor.innerHTML = Object.entries(porOperador)
-        .map(([operador, items]) => {
+    const operadoresDisponibles = Object.keys(porOperador);
 
-            const color = coloresOperadores[operador] || '#333';
-            const tituloDinamico = titulosProOperador[operador] || `Planes ${operador}`;
-
-            function formatearPrecio(valor) {
-                return new Intl.NumberFormat('es-CO').format(Number(valor));
-            }
-
-            const cards = items.map(item => `
-                <div class="card-wrapper">
-                    <div class="tittle-paquetes" style="border-top: 4px solid ${color};">
-                        <h2 style="color: ${color};">
-                            <strong></strong> ${item['Paquete'] || 'N/A'}
-                        </h2>
-                    </div>
-                    <div class="content">
-                        <h3>Precio Mes</h3>
-                        <p>
-                            <strong style="color:red; font-size: 1.5em; font-weight: bold;">
-                            $ ${item[' Precio '] ? formatearPrecio(item[' Precio ']) : 'Consultar'}
-                            </strong>
-                        </p>
-
-                        <p>${item['Velocidad del @'] || 'N/A'}</p>
-
-                        <p><strong>TV: </strong> ${item['Tipo de TV'] || 'General'}</p>
-                        <p><strong>Decos: </strong> ${item['Cantidad de Decos incluidos'] || 'N/A'}</p>
-                        <p><strong>Valores Agregados: </strong> ${item['Valores Agregados'] || 'N/A'}</p>
-                        <p><strong>Observación: </strong> ${item['Observación'] || 'N/A'}</p>
-                    </div>
+    // ─── SELECTOR UI ────────────────────────────────────────────────────────────
+    const selectorHTML = `
+        <div class="selector-comparar">
+            <h2 class="selector-titulo">Comparar 2 operadores</h2>
+            <div class="selector-controles">
+                <div class="selector-grupo">
+                    <label for="op1">Operador 1</label>
+                    <select id="op1">
+                        <option value="">-- Selecciona --</option>
+                        ${operadoresDisponibles.map(op => `<option value="${op}">${op}</option>`).join('')}
+                    </select>
                 </div>
-            `).join('');
+                <span class="selector-vs">VS</span>
+                <div class="selector-grupo">
+                    <label for="op2">Operador 2</label>
+                    <select id="op2">
+                        <option value="">-- Selecciona --</option>
+                        ${operadoresDisponibles.map(op => `<option value="${op}">${op}</option>`).join('')}
+                    </select>
+                </div>
+            </div>
+            <button id="btn-comparar">Comparar</button>
+            <button id="btn-limpiar" class="btn-secundario">Ver todos</button>
+        </div>
+        <div id="resultado-comparacion"></div>
+    `;
 
-            return `
+    // ─── HELPER: renderiza un operador ──────────────────────────────────────────
+    function renderOperador(operador, items) {
+        const color = coloresOperadores[operador] || '#333';
+        const tituloDinamico = titulosProOperador[operador] || `Planes ${operador}`;
+
+        function formatearPrecio(valor) {
+            return new Intl.NumberFormat('es-CO').format(Number(valor));
+        }
+
+        const cards = items.map(item => `
+            <div class="card-wrapper">
+                <div class="tittle-paquetes" style="border-top: 4px solid ${color};">
+                    <h2 style="color: ${color};">
+                        <strong></strong> ${item['Paquete'] || 'N/A'}
+                    </h2>
+                </div>
+                <div class="content">
+                    <h3>Precio Mes</h3>
+                    <p>
+                        <strong style="color:red; font-size: 1.5em; font-weight: bold;">
+                        $ ${item[' Precio '] ? formatearPrecio(item[' Precio ']) : 'Consultar'}
+                        </strong>
+                    </p>
+                    <p>${item['Velocidad del @'] || 'N/A'}</p>
+                    <p><strong>TV: </strong> ${item['Tipo de TV'] || 'General'}</p>
+                    <p><strong>Decos: </strong> ${item['Cantidad de Decos incluidos'] || 'N/A'}</p>
+                    <p><strong>Campaña: </strong> ${item['Campaña Expecifique la campaña o promoción, Tarifa especial, Descuentos. Etc'] || 'N/A'}</p>
+                    <p><strong>Valores Agregados: </strong> ${item['Valores Agregados'] || 'N/A'}</p>
+                    <p><strong>Observación: </strong> ${item['Observación'] || 'N/A'}</p>
+                </div>
+            </div>
+        `).join('');
+
+        return `
             <div class="operador-section">
                 <h1 style="color: ${color}">${tituloDinamico}</h1>
                 <div class="cards-container">
                     ${cards}
                 </div>
             </div>`;
-        })
-        .join('');
+    }
+
+    // ─── RENDER TODOS LOS OPERADORES ────────────────────────────────────────────
+    function renderTodos() {
+        const resultado = document.getElementById('resultado-comparacion');
+        resultado.className = 'main-section';
+        resultado.innerHTML = Object.entries(porOperador)
+            .map(([operador, items]) => renderOperador(operador, items))
+            .join('');
+    }
+
+    // ─── RENDER COMPARACIÓN SIDE BY SIDE ────────────────────────────────────────
+    function renderComparacion(op1, op2) {
+        const resultado = document.getElementById('resultado-comparacion');
+        resultado.className = 'comparacion-wrapper';
+
+        if (!op1 && !op2) {
+            resultado.innerHTML = '<p class="aviso-selector">Selecciona al menos un operador.</p>';
+            return;
+        }
+
+        const cols = [op1, op2].filter(Boolean).map(op => {
+            if (!porOperador[op]) return `<div class="col-comparacion"><p>Operador no encontrado.</p></div>`;
+            return `<div class="col-comparacion">${renderOperador(op, porOperador[op])}</div>`;
+        });
+
+        resultado.innerHTML = cols.join('');
+    }
+
+    // ─── MONTAR VISTA SEGÚN TAMAÑO ───────────────────────────────────────────────
+    function montarVista(esMobil) {
+        if (esMobil) {
+            contenedor.innerHTML = selectorHTML;
+            renderTodos();
+
+            document.getElementById('btn-comparar').addEventListener('click', () => {
+                const op1 = document.getElementById('op1').value;
+                const op2 = document.getElementById('op2').value;
+                renderComparacion(op1, op2);
+            });
+
+            document.getElementById('btn-limpiar').addEventListener('click', () => {
+                document.getElementById('op1').value = '';
+                document.getElementById('op2').value = '';
+                renderTodos();
+            });
+        } else {
+            contenedor.className = 'main-section';
+            contenedor.innerHTML = Object.entries(porOperador)
+                .map(([operador, items]) => renderOperador(operador, items))
+                .join('');
+        }
+    }
+
+    // ─── INIT + LISTENER EN TIEMPO REAL ─────────────────────────────────────────
+    const mediaQuery = window.matchMedia('(max-width: 480px)');
+
+    montarVista(mediaQuery.matches);
+
+    // Cambia automáticamente al redimensionar, sin recargar la página
+    mediaQuery.addEventListener('change', (e) => {
+        montarVista(e.matches);
+    });
 }
 
 cargarContenido();

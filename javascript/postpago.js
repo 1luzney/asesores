@@ -2,22 +2,18 @@
 
 import { getDatos } from './excel.js';
 
-// Utilidad: normaliza claves problemáticas (espacios extra, saltos de línea)
 function normalizeKey(key) {
   if (!key) return '';
   return String(key).replace(/\s+/g, ' ').replace(/\r?\n/g, ' ').trim();
 }
 
-// Utilidad: obtiene el valor probando varias posibles claves
 function getField(item, candidates, fallback = 'N/A') {
   for (const raw of candidates) {
     const norm = normalizeKey(raw);
-    // Intento exacto
     if (item.hasOwnProperty(norm)) {
       const v = item[norm];
       if (v !== undefined && v !== null && v !== '') return v;
     }
-    // Intento buscando claves equivalentes en el objeto (por si vienen sin normalizar)
     for (const k of Object.keys(item)) {
       if (normalizeKey(k) === norm) {
         const v = item[k];
@@ -41,15 +37,12 @@ async function cargarContenido() {
     return;
   }
 
-  // Filtrar operadores válidos
   const datosFiltrados = datos.filter(item =>
     item.Operador && item.Operador !== 'Sin Operador'
   );
 
-  // Ordenar por Operador
   datosFiltrados.sort((a, b) => String(a.Operador).localeCompare(String(b.Operador)));
 
-  // Colores por operador
   const coloresOperadores = {
     "Claro": "#e63946",
     "Movistar": "#2dc653",
@@ -59,7 +52,6 @@ async function cargarContenido() {
     "Somos": "#000000"
   };
 
-  // Títulos por operador
   const titulosProOperador = {
     "Claro": "Planes Móvil C",
     "Movistar": "Planes Móvil M",
@@ -69,7 +61,6 @@ async function cargarContenido() {
     "Somos": "Planes Móvil S"
   };
 
-  // Agrupar por Operador
   const porOperador = {};
   for (const item of datosFiltrados) {
     const op = item.Operador;
@@ -77,63 +68,144 @@ async function cargarContenido() {
     porOperador[op].push(item);
   }
 
-  // Render
-  contenedor.innerHTML = Object.entries(porOperador)
-    .map(([operador, items]) => {
-      const color = coloresOperadores[operador] || '#333';
-      const tituloDinamico = titulosProOperador[operador] || `Planes ${operador}`;
+  const operadoresDisponibles = Object.keys(porOperador);
 
-      function formatearPrecio(valor) {
-        return new Intl.NumberFormat('es-CO').format(Number(valor));
-      }
-
-      const cards = items.map((item) => {
-        // Campos con posibles variaciones de nombre desde Excel
-        const cantidadGB = getField(item, ['Cantidad de GB']);
-        const mesesDescuento = getField(item, ['Meses de Descuento']);
-        const appsDespues = getField(item, ['Apps que se pueden seguir usando terminada la capacidad de navegación del plan']);
-        const campania = getField(item, ['Campaña Oferta o Descuento', 'Campaña', 'Campaña Oferta', 'Campaña Oferta o Descuento']);
-        const minutosLDI = getField(item, ['Minutos LDI Paises', 'Minutos LDI Países', 'Minutos LDI']);
-        const tarifaTotal = getField(item, [
-          'CFM Con Impuesto Total Tarifa',
-          'CFM Con Impuesto  Total Tarifa',
-          'CFM Con Impuesto',
-          'Total Tarifa'
-        ]);
-
-        return `
-          <div class="card-wrapper">
-            <div class="tittle-paquetes" style="border-top: 4px solid ${color};">
-              <h2 style="color: ${color};">
-                <strong>Plan:</strong> ${cantidadGB || 'N/A'}
-              </h2>
-            </div>
-            <div class="content">
-              <p><strong>Navegación:</strong> ${cantidadGB || 'N/A'} GB</p>
-              <p><strong>Meses de Descuento:</strong> ${mesesDescuento}</p>
-              <p><strong>Apps después del plan:</strong> ${appsDespues}</p>
-              <p><strong>Campaña:</strong> ${campania}</p>
-              <p><strong>Minutos Países:</strong> ${minutosLDI}</p>
-              <p>
-                <strong style="color:red; font-size: 1.5em; font-weight: bold;">
-                $ ${tarifaTotal ? formatearPrecio(tarifaTotal) : 'Consultar'}
-                </strong>
-              </p>
-            </div>
+  // ─── SELECTOR UI ────────────────────────────────────────────────────────────
+  const selectorHTML = `
+      <div class="selector-comparar">
+          <h2 class="selector-titulo">Comparar 2 operadores</h2>
+          <div class="selector-controles">
+              <div class="selector-grupo">
+                  <label for="op1">Operador 1</label>
+                  <select id="op1">
+                      <option value="">-- Selecciona --</option>
+                      ${operadoresDisponibles.map(op => `<option value="${op}">${op}</option>`).join('')}
+                  </select>
+              </div>
+              <span class="selector-vs">VS</span>
+              <div class="selector-grupo">
+                  <label for="op2">Operador 2</label>
+                  <select id="op2">
+                      <option value="">-- Selecciona --</option>
+                      ${operadoresDisponibles.map(op => `<option value="${op}">${op}</option>`).join('')}
+                  </select>
+              </div>
           </div>
-        `;
-      }).join('');
+          <button id="btn-comparar">Comparar</button>
+          <button id="btn-limpiar" class="btn-secundario">Ver todos</button>
+      </div>
+      <div id="resultado-comparacion"></div>
+  `;
+
+  // ─── HELPER: renderiza un operador ──────────────────────────────────────────
+  function renderOperador(operador, items) {
+    const color = coloresOperadores[operador] || '#333';
+    const tituloDinamico = titulosProOperador[operador] || `Planes ${operador}`;
+
+    function formatearPrecio(valor) {
+      return new Intl.NumberFormat('es-CO').format(Number(valor));
+    }
+
+    const cards = items.map((item) => {
+      const cantidadGB    = getField(item, ['Cantidad de GB']);
+      const mesesDescuento = getField(item, ['Meses de Descuento']);
+      const appsDespues   = getField(item, ['Apps que se pueden seguir usando terminada la capacidad de navegación del plan']);
+      const campania      = getField(item, ['Campaña Oferta o Descuento', 'Campaña', 'Campaña Oferta']);
+      const minutosLDI    = getField(item, ['Minutos LDI Paises', 'Minutos LDI Países', 'Minutos LDI']);
+      const tarifaTotal   = getField(item, ['CFM Con Impuesto Total Tarifa', 'CFM Con Impuesto  Total Tarifa', 'CFM Con Impuesto', 'Total Tarifa']);
 
       return `
-        <div class="operador-section">
-          <h1 style="color: ${color}">${tituloDinamico}</h1>
-          <div class="cards-container">
-            ${cards}
+        <div class="card-wrapper">
+          <div class="tittle-paquetes" style="border-top: 4px solid ${color};">
+            <h2 style="color: ${color};">
+              <strong>Plan:</strong> ${cantidadGB || 'N/A'}
+            </h2>
+          </div>
+          <div class="content">
+            <p><strong>Navegación:</strong> ${cantidadGB || 'N/A'} GB</p>
+            <p><strong>Meses de Descuento:</strong> ${mesesDescuento}</p>
+            <p><strong>Apps después del plan:</strong> ${appsDespues}</p>
+            <p><strong>Campaña:</strong> ${campania}</p>
+            <p><strong>Minutos Países:</strong> ${minutosLDI}</p>
+            <p>
+              <strong style="color:red; font-size: 1.5em; font-weight: bold;">
+              $ ${tarifaTotal ? formatearPrecio(tarifaTotal) : 'Consultar'}
+              </strong>
+            </p>
           </div>
         </div>
       `;
-    })
-    .join('');
+    }).join('');
+
+    return `
+      <div class="operador-section">
+        <h1 style="color: ${color}">${tituloDinamico}</h1>
+        <div class="cards-container">
+          ${cards}
+        </div>
+      </div>`;
+  }
+
+  // ─── RENDER TODOS ────────────────────────────────────────────────────────────
+  function renderTodos() {
+    const resultado = document.getElementById('resultado-comparacion');
+    resultado.className = 'main-section';
+    resultado.innerHTML = Object.entries(porOperador)
+      .map(([operador, items]) => renderOperador(operador, items))
+      .join('');
+  }
+
+  // ─── RENDER COMPARACIÓN SIDE BY SIDE ────────────────────────────────────────
+  function renderComparacion(op1, op2) {
+    const resultado = document.getElementById('resultado-comparacion');
+    resultado.className = 'comparacion-wrapper';
+
+    if (!op1 && !op2) {
+      resultado.innerHTML = '<p class="aviso-selector">Selecciona al menos un operador.</p>';
+      return;
+    }
+
+    const cols = [op1, op2].filter(Boolean).map(op => {
+      if (!porOperador[op]) return `<div class="col-comparacion"><p>Operador no encontrado.</p></div>`;
+      return `<div class="col-comparacion">${renderOperador(op, porOperador[op])}</div>`;
+    });
+
+    resultado.innerHTML = cols.join('');
+  }
+
+  // ─── MONTAR VISTA SEGÚN TAMAÑO ───────────────────────────────────────────────
+  function montarVista(esMobil) {
+    if (esMobil) {
+      contenedor.innerHTML = selectorHTML;
+      renderTodos();
+
+      document.getElementById('btn-comparar').addEventListener('click', () => {
+        const op1 = document.getElementById('op1').value;
+        const op2 = document.getElementById('op2').value;
+        renderComparacion(op1, op2);
+      });
+
+      document.getElementById('btn-limpiar').addEventListener('click', () => {
+        document.getElementById('op1').value = '';
+        document.getElementById('op2').value = '';
+        renderTodos();
+      });
+    } else {
+      contenedor.className = 'main-section';
+      contenedor.innerHTML = Object.entries(porOperador)
+        .map(([operador, items]) => renderOperador(operador, items))
+        .join('');
+    }
+  }
+
+  // ─── INIT + LISTENER EN TIEMPO REAL ─────────────────────────────────────────
+  const mediaQuery = window.matchMedia('(max-width: 480px)');
+
+  montarVista(mediaQuery.matches);
+
+  mediaQuery.addEventListener('change', (e) => {
+    montarVista(e.matches);
+  });
 }
 
 cargarContenido();

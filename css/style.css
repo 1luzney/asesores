@@ -115,7 +115,15 @@ header {
     width: 100vw;
     margin: 0;
     text-align: center;
+    flex-direction: column;
 
+    .menu-links {
+        display: flex;
+        margin-bottom: 20px;
+        gap: 20px;
+        width: 100%;
+        justify-content: space-around;
+    }
 
     a {
         text-decoration: none;
@@ -298,6 +306,143 @@ main {
     max-width: unset;
 }
 
+.selector-comparar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    padding: 20px;
+    margin: 0 auto 30px auto;
+    background-color: rgba(0, 0, 0, 0.25);
+    border-radius: 16px;
+    max-width: 700px;
+}
+
+.selector-titulo {
+    font-size: 1.4rem;
+    color: #fff;
+    text-align: center;
+}
+
+.selector-controles {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+}
+
+.selector-grupo {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    align-items: center;
+}
+
+.selector-grupo label {
+    color: #ddd;
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.selector-grupo select {
+    padding: 10px 14px;
+    border-radius: 10px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    font-size: 1rem;
+    cursor: pointer;
+    min-width: 180px;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='white' stroke-width='2' fill='none'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    padding-right: 36px;
+}
+
+.selector-grupo select option {
+    background-color: #3a3f55;
+    color: #fff;
+}
+
+.selector-vs {
+    font-size: 1.6rem;
+    font-weight: 900;
+    color: #fff;
+    opacity: 0.6;
+    padding-top: 20px;
+}
+
+#btn-comparar {
+    padding: 12px 32px;
+    border-radius: 10px;
+    border: none;
+    background-color: #1d70b8;
+    color: #fff;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.1s;
+}
+
+#btn-comparar:hover {
+    background-color: #155a99;
+    transform: translateY(-2px);
+}
+
+.btn-secundario {
+    padding: 10px 24px;
+    border-radius: 10px;
+    border: 2px solid rgba(255, 255, 255, 0.4);
+    background-color: transparent;
+    color: #fff;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.btn-secundario:hover {
+    background-color: rgba(255, 255, 255, 0.15);
+}
+
+.aviso-selector {
+    text-align: center;
+    color: #fff;
+    font-size: 1.1rem;
+    padding: 20px;
+}
+
+/* ═══════════════════════════════════════════════
+   COMPARACIÓN SIDE BY SIDE - ESCRITORIO
+═══════════════════════════════════════════════ */
+
+.comparacion-wrapper {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    padding: 20px;
+    align-items: flex-start;
+    justify-content: center;
+    overflow-x: auto;
+}
+
+.col-comparacion {
+    flex: 1;
+    min-width: 300px;
+    max-width: 50%;
+}
+
+.col-comparacion .operador-section {
+    width: 100%;
+}
+
+.col-comparacion .cards-container {
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+}
+
 @media (max-width: 480px) {
 
     header {
@@ -381,6 +526,66 @@ main {
      .card-wrapper {
         height: auto;
         min-height: auto;
+    }
+
+     .selector-controles {
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .selector-vs {
+        padding-top: 0;
+        font-size: 1.2rem;
+    }
+
+    .selector-grupo select {
+        min-width: 220px;
+    }
+
+    /* Las 2 columnas se mantienen en móvil para la comparación */
+    .comparacion-wrapper {
+        flex-direction: row;  /* ← mantener row en móvil para side by side */
+        padding: 10px 6px;
+        gap: 8px;
+        overflow-x: hidden;
+    }
+
+    .col-comparacion {
+        flex: 1;
+        min-width: 0;         /* ← permite que se compriman */
+        max-width: 50%;
+    }
+
+    /* Las cards dentro de cada columna: 1 por fila en móvil */
+    .col-comparacion .cards-container {
+        grid-template-columns: 1fr;
+    }
+
+    /* Ajuste de card en modo comparación móvil */
+    .col-comparacion .card-wrapper {
+        width: 100%;
+        max-width: 100%;
+        height: auto;
+        min-height: auto;
+    }
+
+    .col-comparacion .card-wrapper .content {
+        min-width: unset;
+        max-width: unset;
+        font-size: 0.78rem;
+    }
+
+    .col-comparacion .tittle-paquetes h2 {
+        font-size: 0.85rem;
+    }
+
+    .col-comparacion .content h3 {
+        font-size: 0.85rem;
+    }
+
+    .col-comparacion .operador-section h1 {
+        font-size: 1rem;
+        padding: 6px;
     }
 }
 

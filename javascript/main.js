@@ -52,38 +52,3 @@
 // import"../postpago";
 // import"../hogar";
 
- 
-//   (function () {
-//     // Normaliza: quita barras finales y pasa a minúsculas para comparar
-//     const norm = (path) => path.replace(/\/+$/, "").toLowerCase();
-
-//     // Ruta actual (ej: "/html/hogar.html" o "/index.html")
-//     const currentPath = norm(window.location.pathname);
-
-//     // Selecciona todos los enlaces dentro del header con id="menu"
-//     const links = document.querySelectorAll("#menu a");
-
-//     links.forEach((link) => {
-//       // Resuelve href relativo a la URL actual
-//       const url = new URL(link.getAttribute("href"), window.location.origin);
-//       const linkPath = norm(url.pathname);
-
-//       // Reglas para considerar activo:
-//       // 1) Coincidencia exacta de ruta
-//       // 2) Tratar "index.html" como raíz de la carpeta (equivalente a "/carpeta/")
-//       const isExact = currentPath === linkPath;
-
-//       const isIndexEquivalent =
-//         (currentPath.endsWith("/") && (linkPath.endsWith("/index.html") || linkPath === "/")) ||
-//         (currentPath.endsWith("/index.html") &&
-//           (linkPath === currentPath || linkPath === currentPath.replace(/index\.html$/, "")));
-
-//       if (isExact || isIndexEquivalent) {
-//         link.classList.add("active");
-//         link.setAttribute("aria-current", "page");
-//       } else {
-//         link.classList.remove("active");
-//         link.removeAttribute("aria-current");
-//       }
-//     });
-//   })();
