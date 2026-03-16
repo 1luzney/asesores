@@ -26,7 +26,7 @@ async function cargarContenido() {
         "Movistar": "#38ca5d",
         "Tigo": "#1d70b8",
         "WOM": "#7b2fff",
-        "Virgin Mobile": "#ff6b00",
+        "Virgin": "#ff6b00",
         "Somos": "#000000"
     };
 
@@ -44,7 +44,7 @@ async function cargarContenido() {
         "Movistar": "M",
         "Tigo": "T",
         "WOM": "W",
-        "Virgin Mobile": "V",
+        "Virgin": "V",
         "Somos": "S",
     };
 

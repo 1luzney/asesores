@@ -47,7 +47,7 @@ async function cargarContenido() {
     "Claro": "#f5091d",
     "Movistar": "#2dc653",
     "Tigo": "#1d70b8",
-    "WOM": "#7b2fff",
+    "wom": "#7b2fff",
     "Virgin Mobile": "#ff6b00",
     "Somos": "#0000005b"
   };
@@ -56,7 +56,7 @@ async function cargarContenido() {
     "Claro": "Planes Móvil C",
     "Movistar": "Planes Móvil M",
     "Tigo": "Planes Móvil T",
-    "WOM": "Planes Móvil W",
+    "wom": "Planes Móvil W",
     "Virgin Mobile": "Planes Móvil V",
     "Somos": "Planes Móvil S"
   };

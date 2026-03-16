@@ -32,7 +32,9 @@ async function cargarContenido() {
         "Tu Cable": "#5f3505",
         "Plus": "#0c5a5a",
         "Anserma": "#f80fb2",
-        "Bitwand": "#619cfa",
+        "Bitwan (INSITEL )": "#619cfa",
+        "Otro": "#d9ff00",
+        
     };
 
     const titulosProOperador = {
@@ -46,7 +48,8 @@ async function cargarContenido() {
         "Tu Cable": "Oferta Hogar TC",
         "Plus": "Oferta Hogar P",
         "Anserma": "Oferta Hogar A",
-        "Bitwand": "Oferta Hogar B"
+        "Bitwan (INSITEL )": "Oferta Hogar B",
+        "Otro": "Oferta Hogar O"
     };
 
     const TituloSelector = {
@@ -109,7 +112,7 @@ async function cargarContenido() {
     // ─── HELPER: renderiza un operador ──────────────────────────────────────────
     function renderOperador(operador, items) {
         const color = coloresOperadores[operador] || '#333';
-        const tituloDinamico = titulosProOperador[operador] || `Planes ${operador}`;
+        const tituloDinamico = titulosProOperador[operador] || `Oferta Hogar ${operador}`;
 
         function formatearPrecio(valor) {
             return new Intl.NumberFormat('es-CO').format(Number(valor));
