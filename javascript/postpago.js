@@ -44,12 +44,12 @@ async function cargarContenido() {
   datosFiltrados.sort((a, b) => String(a.Operador).localeCompare(String(b.Operador)));
 
   const coloresOperadores = {
-    "Claro": "#e63946",
+    "Claro": "#f5091d",
     "Movistar": "#2dc653",
     "Tigo": "#1d70b8",
     "WOM": "#7b2fff",
     "Virgin Mobile": "#ff6b00",
-    "Somos": "#000000"
+    "Somos": "#0000005b"
   };
 
   const titulosProOperador = {
