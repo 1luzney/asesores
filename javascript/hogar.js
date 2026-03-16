@@ -30,7 +30,9 @@ async function cargarContenido() {
         "Somos": "#00000096",
         "Legon": "#ffb703",
         "Tu Cable": "#5f3505",
-        "Plus": "#0c5a5a"
+        "Plus": "#0c5a5a",
+        "Anserma": "#f80fb2",
+        "Bitwand": "#619cfa",
     };
 
     const titulosProOperador = {
@@ -42,7 +44,9 @@ async function cargarContenido() {
         "Somos": "Oferta Hogar S",
         "Legon": "Oferta Hogar L",
         "Tu Cable": "Oferta Hogar TC",
-        "Plus": "Oferta Hogar P"
+        "Plus": "Oferta Hogar P",
+        "Anserma": "Oferta Hogar A",
+        "Bitwand": "Oferta Hogar B"
     };
 
     const TituloSelector = {
@@ -54,7 +58,9 @@ async function cargarContenido() {
         "Somos": "S",
         "Legon": "L",
         "Tu Cable": "TC",
-        "Plus": "P"
+        "Plus": "P",
+        "Anserma": "A",
+        "Bitwand": "B"
     };
 
 
