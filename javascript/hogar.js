@@ -128,9 +128,9 @@ async function cargarContenido() {
                 <div class="content">
                     <h3>Precio Mes</h3>
                     <p class="precio">
-                        <strong style="color:white; background-color:rgba(255, 0, 0, 0.70); font-size:1.5em; font-weight:bold; padding:5px 10px; border-radius:20px;">
+                        <span  class="precio-badge">
                         $ ${item[' Precio '] ? formatearPrecio(item[' Precio ']) : 'Consultar'}
-                        </strong>
+                        </span>
                     </p>
                     <p>${item['Velocidad del @'] || 'N/A'}</p>
                     <p><strong>TV: </strong> ${item['Tipo de TV'] || 'General'}</p>

@@ -7,6 +7,7 @@
 
 body {
     background-color: #747b9694;
+
 }
 
 /*index*/
@@ -16,12 +17,14 @@ img {
     display: block;
 }
 
+
 .title_index {
     width: 100vh;
     text-align: center;
     margin: 20px 0 0 0;
     font-size: 60px;
 }
+
 
 .p_index {
     text-align: center;
@@ -34,12 +37,14 @@ img {
     flex: 1;
     min-width: 0;
     width: 100%;
+    
     justify-content: space-between;
     align-items: center;
     text-align: center;
     margin-bottom: 15px;
     padding: 10px;
     text-decoration: none;
+
 
     a {
         text-decoration: none;
@@ -58,6 +63,8 @@ img {
             justify-content: center;
         }
     }
+
+
 
     a:hover h3 {
         font-size: 0;
@@ -84,6 +91,7 @@ img {
 }
 
 /*header general*/
+
 header {
     padding: 15px;
     background-color: #747b96e3;
@@ -92,9 +100,7 @@ header {
     align-items: center;
     height: auto;
     font-size: 30px;
-    width: 100%;
-    max-width: 100%;
-    overflow: hidden;
+    width: 100vw;
     margin: 0;
     text-align: center;
     flex-direction: column;
@@ -112,14 +118,17 @@ header {
         color: black;
     }
 
-    p {
+    p{
+        
         color: #f5f2f2;
     }
 }
 
-/* movil prepago */
+
+/* movil prepago*/
+
 main {
-    width: 100%; /* FIX: era "width: 10" — valor inválido */
+    width: 10;
 
     .title {
         display: block;
@@ -139,10 +148,8 @@ main {
 
 /* La Tarjeta */
 .content {
-    /* FIX: quitado min-width: 280px — causaba desbordamiento en móvil */
-    min-width: 0;
-    max-width: 100%; /* FIX: era 320px fijo */
-    width: 100%;
+    min-width: 280px;
+    max-width: 320px;
     background-color: #0000803d;
     border-radius: 15px;
     padding: 20px;
@@ -155,6 +162,7 @@ main {
     gap: 20px;
     flex: 1;
     flex-grow: 1;
+    /* Hace que el contenido se distribuya y estire */
     justify-content: space-between;
 }
 
@@ -162,26 +170,7 @@ main {
     transform: translateY(-10px);
     background-color: #a3a3bd2d;
     border: 1px solid black;
-}
 
-.precio{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    
-}
-
-.precio-badge{
-    display: inline-block;
-    color: white;
-    background-color: rgba(255, 0, 0, 0.70);
-    font-size: clamp(0.85rem, 3vw, 1.3rem); /* se adapta al ancho disponible */
-    font-weight: bold;
-    padding: 5px 10px;
-    border-radius: 20px;
-    white-space: nowrap;
-    box-sizing: border-box;
 }
 
 .tittle-paquetes {
@@ -189,7 +178,9 @@ main {
     padding: 15px;
     background-color: rgba(0, 0, 0, 0.733);
     min-height: 60px;
+
 }
+
 
 .content p,
 .content h2,
@@ -198,7 +189,9 @@ main {
     overflow-wrap: break-word;
 }
 
+
 /* Estilos base del menú */
+
 #menu {
     position: sticky;
     top: 0;
@@ -207,24 +200,25 @@ main {
     backdrop-filter: blur(1px);
     padding: 12px 20px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    width: 100%;
-    max-width: 100%;
-    overflow: hidden;
-    box-sizing: border-box;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
 }
 
+/* Evita que el contenido se esconda debajo del menú */
 main {
     margin-top: 70px;
+    /* Ajusta según la altura real del menú */
 }
+
+
 
 #menu a.active,
 #menu a[aria-current="page"] {
-    background: rgba(255, 255, 255, 0.18);
+     background: rgba(255, 255, 255, 0.18);
     color: white;
+
     font-weight: 600;
     border-radius: 25px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.15);
 }
 
 #menu a {
@@ -237,16 +231,8 @@ main {
 }
 
 #menu a:hover {
-    background: rgba(255, 255, 255, 0.12);
+    background: rgba(255,255,255,0.12);
     color: white;
-}
-
-#menu-list {
-    display: flex;
-    margin-bottom: 20px;
-    gap: 20px;
-    justify-content: center;
-    flex-wrap: wrap;
 }
 
 .main-section {
@@ -259,6 +245,7 @@ main {
     padding: 30px 20px;
     gap: 20px;
 }
+
 
 .columna-operador {
     display: flex;
@@ -281,38 +268,36 @@ main {
     padding-top: 10px;
 }
 
-.operador-section{
-    min-width: 300px;
-    max-width: 320px;
-    flex-shrink: 0;
-}
-
 .cards-container {
     display: grid;
     gap: 20px;
+    /* TODAS EXACTAMENTE IGUALES */
     justify-content: center;
-    
-    grid-template-columns: 1fr;
+    /* TODAS LAS TARJETAS DEL MISMO ALTO AUTOMÁTICO */
+    grid-auto-rows: 1fr;
+    /*  3 columnas iguales */
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
     align-items: stretch;
 }
 
-/* FIX PRINCIPAL: card-wrapper sin ancho fijo */
+
 .card-wrapper {
     border-radius: 12px;
     overflow: hidden;
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
-    margin: 10px 0;
+    margin: 10px 0 10px 0;
+    
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     height: 600px;
+    /* 3) Forzar misma altura */
     min-height: 350px;
+    /* 4) Ajusta al tamaño ideal */
     box-sizing: border-box;
-    /* FIX: quitado width: 280px y max-width: 280px fijos
-       Ahora la card ocupa el ancho que le da el grid */
-    width: 100%;
-    max-width: 100%;
-    min-width: unset;
+    width: 280px;
+    /* 🔥 Fuerza mismo ancho siempre */
+    max-width: 280px;
 }
 
 .card-wrapper .tittle-paquetes {
@@ -434,7 +419,9 @@ main {
     padding: 20px;
 }
 
-/* COMPARACIÓN SIDE BY SIDE - ESCRITORIO */
+/* 
+COMPARACIÓN SIDE BY SIDE - ESCRITORIO*/
+
 .comparacion-wrapper {
     display: flex;
     flex-direction: row;
@@ -442,33 +429,31 @@ main {
     padding: 20px;
     align-items: flex-start;
     justify-content: center;
-    /* FIX: overflow-x: auto en lugar de hidden para no cortar contenido */
     overflow-x: auto;
 }
 
 .col-comparacion {
     flex: 1;
-    min-width: 0; /* FIX: permite compresión real sin desbordamiento */
-    /* FIX: quitado max-width: 50% — flex: 1 ya distribuye el espacio */
+    min-width: 300px;
+    max-width: 50%;
 }
 
 .col-comparacion .operador-section {
     width: 100%;
 }
 
-/* FIX: minmax con min 0 para que el grid no desborde la columna */
 .col-comparacion .cards-container {
-    grid-template-columns: repeat(auto-fill, minmax(min(260px, 100%), 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
 }
 
-/* ─── RESPONSIVE MÓVIL ─────────────────────────────────── */
 @media (max-width: 480px) {
 
     header {
+       
         font-size: 15px;
-        overflow: hidden;
-        
     }
+
+
 
     .title_index {
         width: 100%;
@@ -476,10 +461,9 @@ main {
     }
 
     .title {
-        font-size: clamp(1.2rem, 6vw, 2rem);
+        font-size: 18px;
         color: #f11818;
         padding: 0 10px;
-        word-break: break-word;
     }
 
     .paquetes {
@@ -487,9 +471,10 @@ main {
         align-items: center;
     }
 
-    .paquetes section > div > div {
+    .paquetes section>div>div {
         height: 100%;
         min-height: auto;
+
 
         p:last-child {
             margin-top: auto;
@@ -498,11 +483,13 @@ main {
     }
 
     .div_index img {
+
         height: 100px;
         object-fit: contain;
         word-wrap: break-word;
         margin-bottom: 10px;
         display: block;
+
     }
 
     .div_index {
@@ -529,46 +516,27 @@ main {
         flex-direction: column !important;
         flex-wrap: wrap;
     }
-
-    .menu-links{
-        flex-wrap: nowrap;
-        gap: 4px;
-        justify-content: space-between;
-    }
-
-    #menu a{
-        font-size: 11px;
-        padding: 6px 6px;
-        white-space: nowrap;
-    }
-
+    
     .columna-operador {
         min-width: 100%;
         max-width: 100%;
     }
 
-    .content {
+    .content{
         height: auto;
         min-height: auto;
     }
 
-    .card-wrapper {
+     .card-wrapper {
         height: auto;
         min-height: auto;
-        width: 280px;
-        width: 280px;
-        max-width: 280px;
     }
 
-    .cards-container{
-        grid-template-columns: 1fr;
-    }
-
-    .precio {
+    .precio{
         font-size: 10px;
     }
 
-    .selector-controles {
+     .selector-controles {
         flex-direction: column;
         gap: 12px;
     }
@@ -579,34 +547,29 @@ main {
     }
 
     .selector-grupo select {
-        /* FIX: max-width 100% para que no se salga en pantallas muy pequeñas */
-        min-width: 0;
-        width: 100%;
-        max-width: 280px;
+        min-width: 220px;
     }
 
-    /* Comparación side-by-side en móvil */
+    /* Las 2 columnas se mantienen en móvil para la comparación */
     .comparacion-wrapper {
-        flex-direction: row;
+        flex-direction: row;  /* ← mantener row en móvil para side by side */
         padding: 10px 6px;
         gap: 8px;
-        /* FIX: overflow-x: auto para que el contenido no quede cortado */
-        overflow-x: auto;
+        overflow-x: hidden;
     }
 
     .col-comparacion {
         flex: 1;
-        min-width: 0;
-        /* FIX: quitado max-width: 50% — con flex: 1 y min-width: 0
-           las columnas se comprimen sin desbordarse */
+        min-width: 0;         /* ← permite que se compriman */
+        max-width: 50%;
     }
 
-    /* 1 card por fila dentro de cada columna en móvil */
+    /* Las cards dentro de cada columna: 1 por fila en móvil */
     .col-comparacion .cards-container {
-        /* FIX: min() asegura que la columna nunca supere el contenedor */
-        grid-template-columns: minmax(0, 1fr);
+        grid-template-columns: 1fr;
     }
 
+    /* Ajuste de card en modo comparación móvil */
     .col-comparacion .card-wrapper {
         width: 100%;
         max-width: 100%;
@@ -633,3 +596,5 @@ main {
         padding: 6px;
     }
 }
+
+

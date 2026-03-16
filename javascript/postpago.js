@@ -135,9 +135,9 @@ async function cargarContenido() {
             <p><strong>Campaña:</strong> ${campania}</p>
             <p><strong>Minutos Países:</strong> ${minutosLDI}</p>
             <p>
-              <strong style="color:white; background-color:rgba(255, 0, 0, 0.70); font-size:1.5em; font-weight:bold; padding:5px 10px; border-radius:20px;">
+              <span  class="precio-badge">
               $ ${tarifaTotal ? formatearPrecio(tarifaTotal) : 'Consultar'}
-              </strong>
+              </span>
             </p>
           </div>
         </div>

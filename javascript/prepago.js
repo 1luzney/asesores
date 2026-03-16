@@ -114,9 +114,9 @@ async function cargarContenido() {
                     <p><strong>Paquete:</strong> ${item.Paquete || 'General'}</p>
                     <p><strong>Campaña:</strong> ${item['Expecifica: Campañas Promociones o Bono de Bienvenida'] || 'N/A'}</p>
                     <p class="precio">
-                        <strong style="color:white; background-color:rgba(255, 0, 0, 0.70); font-size:1.5em; font-weight:bold; padding:5px 10px; border-radius:20px;">
+                        <span class="precio-badge">
                         $ ${item['Precio de la Recarga'] ? formatearPrecio(item['Precio de la Recarga']) : 'Consultar'}
-                        </strong>
+                        </span>
                     </p>
                     <p><small>Vigencia: ${item['Días de Vigencia'] || 'Dias'} días</small></p>
                 </div>
