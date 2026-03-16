@@ -73,7 +73,7 @@ async function cargarContenido() {
   // ─── SELECTOR UI ────────────────────────────────────────────────────────────
   const selectorHTML = `
       <div class="selector-comparar">
-          <h2 class="selector-titulo">Comparar 2 operadores</h2>
+          <h2 class="selector-titulo">Mostrar 3 operadores</h2>
           <div class="selector-controles">
               <div class="selector-grupo">
                   <label for="op1">Operador 1</label>
@@ -82,7 +82,7 @@ async function cargarContenido() {
                       ${operadoresDisponibles.map(op => `<option value="${op}">${op}</option>`).join('')}
                   </select>
               </div>
-              <span class="selector-vs">VS</span>
+              
               <div class="selector-grupo">
                   <label for="op2">Operador 2</label>
                   <select id="op2">
@@ -90,8 +90,15 @@ async function cargarContenido() {
                       ${operadoresDisponibles.map(op => `<option value="${op}">${op}</option>`).join('')}
                   </select>
               </div>
+              <div class="selector-grupo">
+                    <label for="op3">Operador 3</label>
+                    <select id="op3">
+                        <option value="">-- Selecciona --</option>
+                        ${operadoresDisponibles.map(op => `<option value="${op}">${op}</option>`).join('')}
+                    </select>
+                </div>
           </div>
-          <button id="btn-comparar">Comparar</button>
+          <button id="btn-comparar">Mostrar</button>
           <button id="btn-limpiar" class="btn-secundario">Ver todos</button>
       </div>
       <div id="resultado-comparacion"></div>
@@ -115,7 +122,7 @@ async function cargarContenido() {
       const tarifaTotal   = getField(item, ['CFM Con Impuesto Total Tarifa', 'CFM Con Impuesto  Total Tarifa', 'CFM Con Impuesto', 'Total Tarifa']);
 
       return `
-        <div class="card-wrapper">
+        <div class="card-wrapper" style="background-color: ${color};">
           <div class="tittle-paquetes" style="border-top: 4px solid ${color};">
             <h2 style="color: ${color};">
               <strong>Plan:</strong> ${cantidadGB || 'N/A'}
@@ -128,7 +135,7 @@ async function cargarContenido() {
             <p><strong>Campaña:</strong> ${campania}</p>
             <p><strong>Minutos Países:</strong> ${minutosLDI}</p>
             <p>
-              <strong style="color:red; font-size: 1.5em; font-weight: bold;">
+              <strong style="color:white; background-color:rgba(255, 0, 0, 0.70); font-size:1.5em; font-weight:bold; padding:5px 10px; border-radius:20px;">
               $ ${tarifaTotal ? formatearPrecio(tarifaTotal) : 'Consultar'}
               </strong>
             </p>
@@ -156,16 +163,16 @@ async function cargarContenido() {
   }
 
   // ─── RENDER COMPARACIÓN SIDE BY SIDE ────────────────────────────────────────
-  function renderComparacion(op1, op2) {
+  function renderComparacion(op1, op2, op3) {
     const resultado = document.getElementById('resultado-comparacion');
     resultado.className = 'comparacion-wrapper';
 
-    if (!op1 && !op2) {
+    if (!op1 && !op2 && !op3) {
       resultado.innerHTML = '<p class="aviso-selector">Selecciona al menos un operador.</p>';
       return;
     }
 
-    const cols = [op1, op2].filter(Boolean).map(op => {
+    const cols = [op1, op2, op3].filter(Boolean).map(op => {
       if (!porOperador[op]) return `<div class="col-comparacion"><p>Operador no encontrado.</p></div>`;
       return `<div class="col-comparacion">${renderOperador(op, porOperador[op])}</div>`;
     });
@@ -182,12 +189,14 @@ async function cargarContenido() {
       document.getElementById('btn-comparar').addEventListener('click', () => {
         const op1 = document.getElementById('op1').value;
         const op2 = document.getElementById('op2').value;
-        renderComparacion(op1, op2);
+        const op3 = document.getElementById('op3').value;
+        renderComparacion(op1, op2, op3);
       });
 
       document.getElementById('btn-limpiar').addEventListener('click', () => {
         document.getElementById('op1').value = '';
         document.getElementById('op2').value = '';
+        document.getElementById('op3').value = '';
         renderTodos();
       });
     } else {

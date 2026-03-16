@@ -39,6 +39,18 @@ async function cargarContenido() {
         "Somos": "Paquetes Movil S"
     };
 
+    const TituloSelector = {
+        "Claro": "C",
+        "Movistar": "M",
+        "Tigo": "T",
+        "WOM": "W",
+        "Virgin Mobile": "V",
+        "Somos": "S",
+        "Legon": "L",
+        "Tu Cable": "TC",
+        "Plus": "P"
+    };
+
     const porOperador = {};
     datosFiltrados.forEach(item => {
         if (!porOperador[item.Operador]) porOperador[item.Operador] = [];
@@ -50,27 +62,27 @@ async function cargarContenido() {
     // ─── SELECTOR UI ────────────────────────────────────────────────────────────
     const selectorHTML = `
         <div class="selector-comparar">
-            <h2 class="selector-titulo">Comparar 2 operadores</h2>
+            <h2 class="selector-titulo">Mostrar 3 operadores</h2>
             <div class="selector-controles">
                 <div class="selector-grupo">
                     <label for="op1">Operador 1</label>
                     <select id="op1">
                         <option value="">-- Selecciona --</option>
-                        ${operadoresDisponibles.map(op => `<option value="${op}">${op}</option>`).join('')}
+                        ${operadoresDisponibles.map(op => `<option value="${op}">${TituloSelector[op] || op}</option>`).join('')}
                     </select>
                 </div>
                 <div class="selector-grupo">
                     <label for="op2">Operador 2</label>
                     <select id="op2">
                         <option value="">-- Selecciona --</option>
-                        ${operadoresDisponibles.map(op => `<option value="${op}">${op}</option>`).join('')}
+                        ${operadoresDisponibles.map(op => `<option value="${op}">${TituloSelector[op] || op}</option>`).join('')}
                     </select>
                 </div>
                 <div class="selector-grupo">
                     <label for="op3">Operador 3</label>
                     <select id="op3">
                         <option value="">-- Selecciona --</option>
-                        ${operadoresDisponibles.map(op => `<option value="${op}">${op}</option>`).join('')}
+                        ${operadoresDisponibles.map(op => `<option value="${op}">${TituloSelector[op] || op}</option>`).join('')}
                     </select>
                 </div>
             </div>
@@ -104,8 +116,8 @@ async function cargarContenido() {
                     </p>
                     <p><strong>Paquete:</strong> ${item.Paquete || 'General'}</p>
                     <p><strong>Campaña:</strong> ${item['Expecifica: Campañas Promociones o Bono de Bienvenida'] || 'N/A'}</p>
-                    <p>
-                        <strong style="color:red; font-size: 1.5em; font-weight: bold;">
+                    <p class="precio">
+                        <strong style="color:white; background-color:rgba(255, 0, 0, 0.70); font-size:1.5em; font-weight:bold; padding:5px 10px; border-radius:20px;">
                         $ ${item['Precio de la Recarga'] ? formatearPrecio(item['Precio de la Recarga']) : 'Consultar'}
                         </strong>
                     </p>

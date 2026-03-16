@@ -17,18 +17,6 @@ img {
     display: block;
 }
 
-.main_index {
-    display: flex;
-    width: 100%;
-    align-items: stretch;
-    gap: 8px;
-    box-sizing: border-box;
-    padding: 10px;
-    flex-wrap: wrap;
-    overflow-x: auto;
-    flex-direction: row;
-    justify-content: space-around;
-}
 
 .title_index {
     width: 100vh;
@@ -49,7 +37,7 @@ img {
     flex: 1;
     min-width: 0;
     width: 100%;
-    flex-direction: column;
+    
     justify-content: space-between;
     align-items: center;
     text-align: center;
@@ -95,7 +83,7 @@ img {
 }
 
 .div_index img {
-    max-width: 100%;
+    max-width: 80%;
     height: 60%;
     object-fit: contain;
     word-wrap: break-word;
@@ -128,6 +116,11 @@ header {
     a {
         text-decoration: none;
         color: black;
+    }
+
+    p{
+        
+        color: #f5f2f2;
     }
 }
 
@@ -175,7 +168,7 @@ main {
 
 .content:hover {
     transform: translateY(-10px);
-    background-color: #00008073;
+    background-color: #a3a3bd2d;
     border: 1px solid black;
 
 }
@@ -204,8 +197,10 @@ main {
     top: 0;
     z-index: 1000;
     background: #41434b73;
-    padding: 12px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+    backdrop-filter: blur(1px);
+    padding: 12px 20px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+    border-bottom: 1px solid rgba(255,255,255,0.1);
 }
 
 /* Evita que el contenido se esconda debajo del menú */
@@ -215,20 +210,29 @@ main {
 }
 
 
-/* #menu a {
-    color: #0e1520;
-    text-decoration: none;
-    padding: 6px 10px;
-    border-radius: 8px;
-    transition: background .2s, color .2s;
-} */
 
 #menu a.active,
 #menu a[aria-current="page"] {
-    color: #0f172a;
-    background: #bec1c4;
+     background: rgba(255, 255, 255, 0.18);
+    color: white;
+
     font-weight: 600;
-    box-shadow: inset 0 -2px 0 #120ee9;
+    border-radius: 25px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+}
+
+#menu a {
+    color: #e6e6e6;
+    text-decoration: none;
+    padding: 8px 14px;
+    font-weight: 500;
+    border-radius: 25px;
+    transition: all .25s ease;
+}
+
+#menu a:hover {
+    background: rgba(255,255,255,0.12);
+    color: white;
 }
 
 .main-section {
@@ -415,9 +419,8 @@ main {
     padding: 20px;
 }
 
-/* ═══════════════════════════════════════════════
-   COMPARACIÓN SIDE BY SIDE - ESCRITORIO
-═══════════════════════════════════════════════ */
+/* 
+COMPARACIÓN SIDE BY SIDE - ESCRITORIO*/
 
 .comparacion-wrapper {
     display: flex;
@@ -446,7 +449,8 @@ main {
 @media (max-width: 480px) {
 
     header {
-        font-size: 20px;
+       padding: 5px;
+        font-size: 15px;
     }
 
 
@@ -526,6 +530,10 @@ main {
      .card-wrapper {
         height: auto;
         min-height: auto;
+    }
+
+    .precio{
+        font-size: 10px;
     }
 
      .selector-controles {

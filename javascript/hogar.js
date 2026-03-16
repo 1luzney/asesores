@@ -22,12 +22,12 @@ async function cargarContenido() {
     datosFiltrados.sort((a, b) => a.Operador.localeCompare(b.Operador));
 
     const coloresOperadores = {
-        "Claro": "#e63946",
+        "Claro": "#ff0015",
         "Movistar": "#0da533",
         "Tigo": "#1d70b8",
         "WOM": "#7b2fff",
         "Virgin Mobile": "#ff6b00",
-        "Somos": "#000000",
+        "Somos": "#00000096",
         "Legon": "#ffb703",
         "Tu Cable": "#5f3505",
         "Plus": "#0c5a5a"
@@ -45,6 +45,19 @@ async function cargarContenido() {
         "Plus": "Oferta Hogar P"
     };
 
+    const TituloSelector = {
+        "Claro": "C",
+        "Movistar": "M",
+        "Tigo": "T",
+        "WOM": "W",
+        "Virgin Mobile": "V",
+        "Somos": "S",
+        "Legon": "L",
+        "Tu Cable": "TC",
+        "Plus": "P"
+    };
+
+
     const porOperador = {};
     datosFiltrados.forEach(item => {
         if (!porOperador[item.Operador]) porOperador[item.Operador] = [];
@@ -56,25 +69,32 @@ async function cargarContenido() {
     // ─── SELECTOR UI ────────────────────────────────────────────────────────────
     const selectorHTML = `
         <div class="selector-comparar">
-            <h2 class="selector-titulo">Comparar 2 operadores</h2>
+            <h2 class="selector-titulo">Mostrar 3 operadores</h2>
             <div class="selector-controles">
                 <div class="selector-grupo">
                     <label for="op1">Operador 1</label>
                     <select id="op1">
                         <option value="">-- Selecciona --</option>
-                        ${operadoresDisponibles.map(op => `<option value="${op}">${op}</option>`).join('')}
+                        ${operadoresDisponibles.map(op => `<option value="${op}">${TituloSelector[op] || op}</option>`).join('')}
                     </select>
                 </div>
-                <span class="selector-vs">VS</span>
+                
                 <div class="selector-grupo">
                     <label for="op2">Operador 2</label>
                     <select id="op2">
                         <option value="">-- Selecciona --</option>
-                        ${operadoresDisponibles.map(op => `<option value="${op}">${op}</option>`).join('')}
+                        ${operadoresDisponibles.map(op => `<option value="${op}">${TituloSelector[op] || op}</option>`).join('')}
+                    </select>
+                </div>
+                <div class="selector-grupo">
+                    <label for="op3">Operador 3</label>
+                    <select id="op3">
+                        <option value="">-- Selecciona --</option>
+                        ${operadoresDisponibles.map(op => `<option value="${op}">${TituloSelector[op] || op}</option>`).join('')}
                     </select>
                 </div>
             </div>
-            <button id="btn-comparar">Comparar</button>
+            <button id="btn-comparar">Mostrar</button>
             <button id="btn-limpiar" class="btn-secundario">Ver todos</button>
         </div>
         <div id="resultado-comparacion"></div>
@@ -90,7 +110,7 @@ async function cargarContenido() {
         }
 
         const cards = items.map(item => `
-            <div class="card-wrapper">
+            <div class="card-wrapper" style="background-color: ${color};">
                 <div class="tittle-paquetes" style="border-top: 4px solid ${color};">
                     <h2 style="color: ${color};">
                         <strong></strong> ${item['Paquete'] || 'N/A'}
@@ -98,8 +118,8 @@ async function cargarContenido() {
                 </div>
                 <div class="content">
                     <h3>Precio Mes</h3>
-                    <p>
-                        <strong style="color:red; font-size: 1.5em; font-weight: bold;">
+                    <p class="precio">
+                        <strong style="color:white; background-color:rgba(255, 0, 0, 0.70); font-size:1.5em; font-weight:bold; padding:5px 10px; border-radius:20px;">
                         $ ${item[' Precio '] ? formatearPrecio(item[' Precio ']) : 'Consultar'}
                         </strong>
                     </p>
@@ -132,16 +152,16 @@ async function cargarContenido() {
     }
 
     // ─── RENDER COMPARACIÓN SIDE BY SIDE ────────────────────────────────────────
-    function renderComparacion(op1, op2) {
+    function renderComparacion(op1, op2, op3) {
         const resultado = document.getElementById('resultado-comparacion');
         resultado.className = 'comparacion-wrapper';
 
-        if (!op1 && !op2) {
+        if (!op1 && !op2 && !op3) {
             resultado.innerHTML = '<p class="aviso-selector">Selecciona al menos un operador.</p>';
             return;
         }
 
-        const cols = [op1, op2].filter(Boolean).map(op => {
+        const cols = [op1, op2, op3].filter(Boolean).map(op => {
             if (!porOperador[op]) return `<div class="col-comparacion"><p>Operador no encontrado.</p></div>`;
             return `<div class="col-comparacion">${renderOperador(op, porOperador[op])}</div>`;
         });
@@ -158,12 +178,14 @@ async function cargarContenido() {
             document.getElementById('btn-comparar').addEventListener('click', () => {
                 const op1 = document.getElementById('op1').value;
                 const op2 = document.getElementById('op2').value;
-                renderComparacion(op1, op2);
+                const op3 = document.getElementById('op3').value;
+                renderComparacion(op1, op2, op3);
             });
 
             document.getElementById('btn-limpiar').addEventListener('click', () => {
                 document.getElementById('op1').value = '';
                 document.getElementById('op2').value = '';
+                document.getElementById('op3').value = '';
                 renderTodos();
             });
         } else {
