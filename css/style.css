@@ -126,7 +126,7 @@ main {
         width: 100%;
         text-align: center;
         margin-top: 20px;
-        font-size: 60px;
+        font-size: 50px;
     }
 
     .paquetes {
@@ -482,7 +482,7 @@ main {
     .title {
         font-size: clamp(1.2rem, 6vw, 2rem);
         color: #f11818;
-        padding: 0 5px;
+        padding: 0 10px;
         word-break: break-word;
     }
 
