@@ -481,7 +481,6 @@ main {
 
     .title {
         font-size: clamp(1.2rem, 6vw, 2rem);
-        
         color: #f11818;
         padding: 0 5px;
         word-break: break-word;
