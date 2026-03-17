@@ -486,6 +486,13 @@ main {
         word-break: break-word;
     }
 
+    .titleP{
+        font-size: clamp(1.2rem, 6vw, 2rem);
+        color: #f11818;
+        padding: 0 10px;
+        text-align: center;
+    }
+
     .paquetes {
         flex-direction: column;
         align-items: center;
@@ -681,11 +688,6 @@ main {
         word-break: break-word;
     }
 
-    .col-comparacion .precio-badge {
-        font-size: 0.6rem;
-        padding: 3px 6px;
-        white-space: nowrap;
-    }
 }
 
     
