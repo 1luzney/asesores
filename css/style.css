@@ -605,20 +605,23 @@ main {
         max-width: 280px;
     }
 
-    /* Comparación side-by-side en móvil */
     .comparacion-wrapper {
-        flex-direction: row;
-        padding: 10px 6px;
-        gap: 8px;
-        /* FIX: overflow-x: auto para que el contenido no quede cortado */
-        overflow-x: auto;
+        flex-direction: column !important;  /* ← cambia row por column */
+        overflow-x: hidden;
+        padding: 10px;
+        gap: 16px;
     }
 
     .col-comparacion {
-        flex: 1;
-        min-width: 0;
-        /* FIX: quitado max-width: 50% — con flex: 1 y min-width: 0
-           las columnas se comprimen sin desbordarse */
+        width: 100%;
+        min-width: 100%;
+        flex: none;
+    }
+
+    .col-comparacion .operador-section {
+        min-width: 100%;
+        max-width: 100%;
+        width: 100%;
     }
 
     /* 1 card por fila dentro de cada columna en móvil */
