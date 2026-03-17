@@ -152,13 +152,24 @@ async function cargarContenido() {
     }
 
     // ─── RENDER TODOS LOS OPERADORES ────────────────────────────────────────────
+    // function renderTodos() {
+    //     const resultado = document.getElementById('resultado-comparacion');
+    //     resultado.className = 'main-section';
+    //     resultado.innerHTML = Object.entries(porOperador)
+    //         .map(([operador, items]) => renderOperador(operador, items))
+    //         .join('');
+    // }
+
     function renderTodos() {
-        const resultado = document.getElementById('resultado-comparacion');
-        resultado.className = 'main-section';
-        resultado.innerHTML = Object.entries(porOperador)
-            .map(([operador, items]) => renderOperador(operador, items))
-            .join('');
-    }
+    const resultado = document.getElementById('resultado-comparacion');
+    // En móvil usa columna, en escritorio usa fila
+    resultado.className = window.matchMedia('(max-width: 480px)').matches 
+        ? 'main-section mobile' 
+        : 'main-section';
+    resultado.innerHTML = Object.entries(porOperador)
+        .map(([operador, items]) => renderOperador(operador, items))
+        .join('');
+}
 
     // ─── RENDER COMPARACIÓN SIDE BY SIDE ────────────────────────────────────────
     function renderComparacion(op1, op2, op3) {

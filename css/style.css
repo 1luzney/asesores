@@ -539,6 +539,18 @@ main {
         flex-wrap: wrap;
     }
 
+    .main-section.mobile {
+        flex-direction: column !important;
+        overflow-x: hidden;
+        align-items: stretch;
+    }
+
+    .main-section.mobile .operador-section {
+        min-width: 100%;
+        max-width: 100%;
+        width: 100%;
+    }
+
     .menu-links{
         flex-wrap: nowrap;
         gap: 4px;
