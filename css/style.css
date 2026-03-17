@@ -606,28 +606,29 @@ main {
     }
 
     .comparacion-wrapper {
-        flex-direction: column !important;  /* ← cambia row por column */
+        flex-direction: row !important;
         overflow-x: hidden;
-        padding: 10px;
-        gap: 16px;
+        padding: 6px;
+        gap: 4px;
+        width: 100%;
     }
 
     .col-comparacion {
-        width: 100%;
-        min-width: 100%;
-        flex: none;
+        flex: 1;
+        min-width: 0;
+        max-width: calc(33.33% - 4px);
+        overflow: hidden;
     }
 
     .col-comparacion .operador-section {
-        min-width: 100%;
+        min-width: 0;
         max-width: 100%;
         width: 100%;
     }
 
-    /* 1 card por fila dentro de cada columna en móvil */
     .col-comparacion .cards-container {
-        /* FIX: min() asegura que la columna nunca supere el contenedor */
-        grid-template-columns: minmax(0, 1fr);
+        grid-template-columns: 1fr;
+        gap: 6px;
     }
 
     .col-comparacion .card-wrapper {
@@ -638,21 +639,59 @@ main {
     }
 
     .col-comparacion .card-wrapper .content {
-        min-width: unset;
-        max-width: unset;
-        font-size: 0.78rem;
+        padding: 6px 4px;
+        font-size: 0.6rem;
+        gap: 6px;
+        min-width: 0;
+        max-width: 100%;
     }
 
-    .col-comparacion .tittle-paquetes h2 {
-        font-size: 0.85rem;
-    }
 
     .col-comparacion .content h3 {
         font-size: 0.85rem;
     }
 
+    .col-comparacion .content h2 {
+        font-size: 0.75rem;
+    }
+
+    .col-comparacion .content p {
+        font-size: 0.6rem;
+        word-break: break-word;
+    }
+
     .col-comparacion .operador-section h1 {
-        font-size: 1rem;
-        padding: 6px;
+        font-size: 0.6rem;
+        padding: 4px 2px;
+        text-align: center;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    
+
+    .col-comparacion .tittle-paquetes {
+        padding: 6px 4px;
+        min-height: auto;
+    }
+
+    .col-comparacion .tittle-paquetes h2 {
+        font-size: 0.55rem;
+        word-break: break-word;
+    }
+
+    .col-comparacion .precio-badge {
+        font-size: 0.6rem;
+        padding: 3px 6px;
+        white-space: nowrap;
     }
 }
+
+    
+
+    
+
+    
+
+    
